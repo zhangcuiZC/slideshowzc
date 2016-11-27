@@ -1,6 +1,7 @@
 # slideshowzc
 一个轮播插件，样式类似于亚马逊首页的轮播图-自用
 其实就是一个函数，可以实现任意个图片的轮播。
+img的alt值将作为轮播图下方的描述信息。
 使用方法：
 0、加载js文件，
 1、一个外层div，class为outerbox，必须设置宽度和高度，最好设置overflow：hidden，
