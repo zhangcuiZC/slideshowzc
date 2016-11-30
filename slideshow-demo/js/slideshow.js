@@ -11,13 +11,15 @@ function slideshow(thetime,thecolor){
 	}
 	//设置各个div的css属性
 	$(".outerbox img").css('float', 'left');
-	$(".outerbox").css('overflow', 'hidden');
-	$(".outerbox").css('position', 'relative');
+	$(".outerbox").css({
+		overflow: 'hidden',
+		position: 'relative'
+	});
 	var imgnum=$(".outerbox img").length;
 	var imgwidth=$(".outerbox img").width();
 	var imgheight=$(".outerbox img").height();
 	$(".outerbox .innerbox").css({
-		width: imgwidth*imgnum,
+		width: imgwidth*imgnum+"px",
 		position: 'absolute',
 		left:'0',
 		top:'0'
@@ -29,7 +31,7 @@ function slideshow(thetime,thecolor){
 		position: 'absolute',
 		left: '0',
 		bottom:'0',
-		width:imgwidth+10,
+		width:imgwidth+10+"px",
 		height:'13%',
 	});
 	var liheight=$(".outerbox .infobox").height();
@@ -38,7 +40,7 @@ function slideshow(thetime,thecolor){
 		$(".outerbox .infobox ul").append('<li><a href=""><span></span></a></li>');
 	}
 	$(".outerbox .infobox ul").css({
-		height: liheight,
+		height: liheight+"px",
 		paddingLeft:'0',
 		marginTop:'0',
 		marginBottom:'0'
@@ -48,21 +50,21 @@ function slideshow(thetime,thecolor){
 		float:'left',
 		marginRight:'3px',
 		background: "rgba(0,0,0,0.4)",
-		height:liheight,
-		width:(imgwidth-(imgnum-1)*3)/imgnum,
+		height:liheight+"px",
+		width:(imgwidth-(imgnum-1)*3)/imgnum+"px",
 		lineHeight:liheight+'px',
 		verticalAlign:'middle'
 	});
 	$(".outerbox .infobox ul li a").css({
 		display: 'inline-block',
-		width:$(".outerbox .infobox ul li").width(),
+		width:$(".outerbox .infobox ul li").width()+"px",
 		textAlign:'center',
 	});
 	$(".outerbox .infobox ul li a span").css({
 		display:'inline-block',
 		lineHeight:'1.1em',
-		paddingLeft:liheight*0.2,
-		paddingRight:liheight*0.2,
+		paddingLeft:liheight*0.2+"px",
+		paddingRight:liheight*0.2+"px",
 		verticalAlign: 'middle',
 		color:'#ddd',
 		fontSize:'12px'
@@ -71,10 +73,10 @@ function slideshow(thetime,thecolor){
 	$(".outerbox").append('<div class="leftarrow arrow">&lt;</div>');
 	$(".outerbox").append('<div class="rightarrow arrow">&gt;</div>');
 	$(".outerbox .arrow").css({
-		width:liheight*0.8,
-		height: liheight*1.5,
+		width:liheight*0.8+"px",
+		height: liheight*1.5+"px",
 		position:'absolute',
-		top:(imgheight*0.5-liheight*0.75-10),
+		top:(imgheight*0.5-liheight*0.75-10)+"px",
 		background: "rgba(0,0,0,0.4)",
 		textAlign:'center',
 		lineHeight:liheight*1.5+'px',
@@ -135,9 +137,9 @@ function slideshow(thetime,thecolor){
 			clearInterval(adTimer);
 		}
 	}, function() {
-		$(this).find('.leftarrow').stop().animate({left:-liheight*0.8},300);
-		$(this).find('.rightarrow').stop().animate({right:-liheight*0.8},300);
-		$(this).find('.infobox').stop().animate({bottom:-(liheight-7)}, 300);
+		$(this).find('.leftarrow').stop().animate({left:-liheight*0.8+"px"},300);
+		$(this).find('.rightarrow').stop().animate({right:-liheight*0.8+"px"},300);
+		$(this).find('.infobox').stop().animate({bottom:-(liheight-7)+"px"}, 300);
 		adTimer=setInterval(function () {
 			if (page!=imgnum) {
 				$(".outerbox .innerbox").animate({left:"-="+imgwidth+"px"}, "normal");
@@ -150,7 +152,7 @@ function slideshow(thetime,thecolor){
 			}
 		},time);
 	}).trigger('mouseleave');
-	//鼠标放在点上时移动图片
+	//鼠标放在下方的颜色块上时移动图片
 	$(".outerbox .infobox ul li").mouseover(function() {
 		var index=$(this).index();
 		page=index+1;
