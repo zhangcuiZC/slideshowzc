@@ -35,10 +35,13 @@ function slideshow(thetime,thecolor){
 		height:'13%',
 	});
 	var liheight=$(".outerbox .infobox").height();
-	$(".outerbox .infobox").append('<ul></ul>');
+
+	var lists="";
 	for(var i=0;i<imgnum;i++){
-		$(".outerbox .infobox ul").append('<li><a href=""><span></span></a></li>');
+		lists+="<li><a href=''><span></span></a></li>";
 	}
+	var ullists="<ul>"+lists+"</ul>";
+	$(".outerbox .infobox").append($(ullists));
 	$(".outerbox .infobox ul").css({
 		height: liheight+"px",
 		paddingLeft:'0',
@@ -70,8 +73,8 @@ function slideshow(thetime,thecolor){
 		fontSize:'12px'
 	});
 	//增加箭头
-	$(".outerbox").append('<div class="leftarrow arrow">&lt;</div>');
-	$(".outerbox").append('<div class="rightarrow arrow">&gt;</div>');
+	var arrows='<div class="leftarrow arrow">&lt;</div><div class="rightarrow arrow">&gt;</div>';
+	$(".outerbox").append($(arrows));
 	$(".outerbox .arrow").css({
 		width:liheight*0.8+"px",
 		height: liheight*1.5+"px",
