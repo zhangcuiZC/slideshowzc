@@ -16,8 +16,8 @@ function slideshow(thetime,thecolor){
 		position: 'relative'
 	});
 	var imgnum=$(".outerbox img").length;
-	var imgwidth=$(".outerbox img").width();
-	var imgheight=$(".outerbox img").height();
+	var imgwidth=$(".outerbox").width();
+	var imgheight=$(".outerbox").height();
 	$(".outerbox .innerbox").css({
 		width: imgwidth*imgnum+"px",
 		position: 'absolute',
