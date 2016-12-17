@@ -21,9 +21,9 @@ function slideshowFadein(thetime,thecolor){
 	var imgnum=$(".outerbox img").length;
 	var imgwidth=$(".outerbox").width();
 	var imgheight=$(".outerbox").height();
-	$(".outerbox img").css({
+	$(".outerbox >a").css({
 		position: 'absolute',
-		left:'0',
+		left: '0',
 		top:'0'
 	});
 	//在outerbox下新增一个显示alt的div
@@ -180,6 +180,6 @@ function slideshowFadein(thetime,thecolor){
 	}
 	//切换图片
 	function showpic(index){
-		$(".outerbox a").stop(true).eq(index).fadeIn().siblings('a').fadeOut();
+		$(".outerbox >a").stop(true,true).eq(index).fadeIn(600).siblings('a').hide(400);
 	}
 }
