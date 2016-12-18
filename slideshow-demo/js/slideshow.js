@@ -15,7 +15,7 @@ function slideshow(thetime,thecolor){
 	var imgnum=$(".outerbox img").length;
 	var imgwidth=$(".outerbox").width();
 	var imgheight=$(".outerbox").height();
-
+	//给每个图片设置data-idx属性标识它们，使其能够和infobox相对应
 	for(var i=0;i<imgnum;i++){
 		$(".outerbox .innerbox img").eq(i).attr('data-idx', i);
 	}
