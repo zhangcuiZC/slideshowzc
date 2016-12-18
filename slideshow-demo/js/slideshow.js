@@ -9,16 +9,23 @@ function slideshow(thetime,thecolor){
 	}else if(arguments.length>2){
 		return false;
 	}
-	//设置各个div的css属性
+
+	var adTimer=null;
+	var innerbox=$(".outerbox .innerbox");
+	var imgnum=$(".outerbox img").length;
+	var imgwidth=$(".outerbox").width();
+	var imgheight=$(".outerbox").height();
+
+	for(var i=0;i<imgnum;i++){
+		$(".outerbox .innerbox img").eq(i).attr('data-idx', i);
+	}
+	//设置各个div的css样式
 	$(".outerbox img").css('float', 'left');
 	$(".outerbox").css({
 		overflow: 'hidden',
 		position: 'relative'
 	});
-	var imgnum=$(".outerbox img").length;
-	var imgwidth=$(".outerbox").width();
-	var imgheight=$(".outerbox").height();
-	$(".outerbox .innerbox").css({
+	innerbox.css({
 		width: imgwidth*imgnum+"px",
 		position: 'absolute',
 		left:'0',
@@ -72,7 +79,18 @@ function slideshow(thetime,thecolor){
 		color:'#ddd',
 		fontSize:'12px'
 	});
-	//增加箭头
+	//获得img上层a的href属性，赋给infobox里的a元素
+	for(var i=0;i<imgnum;i++){
+		var link=$(".outerbox .innerbox a").eq(i).attr("href");
+		var info=$(".outerbox .innerbox img").eq(i).attr("alt");
+		$(".outerbox .infobox a").eq(i).attr('href', link);
+		if(info){
+			$(".outerbox .infobox span").eq(i).append(info);
+		}else{
+			$(".outerbox .infobox span").eq(i).append(i+1);
+		}
+	}
+	//增加左右箭头
 	var arrows='<div class="leftarrow arrow">&lt;</div><div class="rightarrow arrow">&gt;</div>';
 	$(".outerbox").append($(arrows));
 	$(".outerbox .arrow").css({
@@ -101,34 +119,25 @@ function slideshow(thetime,thecolor){
 		$(this).css('background', 'rgba(0,0,0,0.4)');
 	});
 	//点击右箭头
-	var page=1;
-	var adTimer=null;
 	$(".outerbox ul li").eq(0).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
 	$(".outerbox .rightarrow").click(function() {
-		if (!$(".outerbox .innerbox").is(':animated')) {
-			if (page!=imgnum) {
-				$(".outerbox .innerbox").animate({left:"-="+imgwidth+"px"}, "normal");
-				$(".outerbox ul li").eq(page).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page++;
-			}else{
-				$(".outerbox .innerbox").animate({left:"0px"}, "normal");
-				$(".outerbox ul li").eq(0).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page=1;
-			}
+		if (!innerbox.is(':animated')) {
+			innerbox.animate({left:-imgwidth}, "normal",function(){
+				$(".outerbox .innerbox a:first").insertAfter($(".outerbox .innerbox a:last"));
+				innerbox.css('left', '0');
+				var dataidx=$(".outerbox .innerbox a:first").find('img').attr("data-idx");
+				$(".outerbox ul li").eq(dataidx).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
+			});	
 		}
 	});
 	//点击左箭头
 	$(".outerbox .leftarrow").click(function() {
-		if (!$(".outerbox .innerbox").is(':animated')) {
-			if (page!=1) {
-				$(".outerbox .innerbox").animate({left:"+="+imgwidth+"px"}, "normal");
-				$(".outerbox ul li").eq(page-2).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page--;
-			}else{
-				$(".outerbox .innerbox").animate({left:"-"+imgwidth*(imgnum-1)+"px"}, "normal");
-				$(".outerbox ul li").eq(imgnum-1).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page=imgnum;
-			}
+		if (!innerbox.is(':animated')) {
+				$(".outerbox .innerbox a:last").insertBefore($(".outerbox .innerbox a:first"));
+				innerbox.css('left', -imgwidth);
+				innerbox.animate({left:0}, "normal");
+				var dataidx=$(".outerbox .innerbox a:first").find('img').attr("data-idx");
+				$(".outerbox ul li").eq(dataidx).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
 		}
 	});
 	//每5s自动滚动，鼠标放在div上时箭头出现，移走箭头消失
@@ -144,34 +153,22 @@ function slideshow(thetime,thecolor){
 		$(this).find('.rightarrow').stop().animate({right:-liheight*0.8+"px"},300);
 		$(this).find('.infobox').stop().animate({bottom:-(liheight-7)+"px"}, 300);
 		adTimer=setInterval(function () {
-			if (page!=imgnum) {
-				$(".outerbox .innerbox").animate({left:"-="+imgwidth+"px"}, "normal");
-				$(".outerbox ul li").eq(page).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page++;
-			}else{
-				$(".outerbox .innerbox").animate({left:"0px"}, "normal");
-				$(".outerbox ul li").eq(0).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-				page=1;	
-			}
+			$(".outerbox .rightarrow").trigger('click');
 		},time);
 	}).trigger('mouseleave');
 	//鼠标放在下方的颜色块上时移动图片
 	$(".outerbox .infobox ul li").mouseover(function() {
 		var index=$(this).index();
-		page=index+1;
-		var num=index*imgwidth;
-		$(".outerbox .infobox ul li").eq(index).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-		$(".outerbox .innerbox").stop(true).animate({left: -num+'px'}, "normal");
-	});
-	//获得img上层a的href属性，赋给infobox里的a元素
-	for(var i=0;i<imgnum;i++){
-		var link=$(".outerbox .innerbox a").eq(i).attr("href");
-		var info=$(".outerbox .innerbox img").eq(i).attr("alt");
-		$(".outerbox .infobox a").eq(i).attr('href', link);
-		if(info){
-			$(".outerbox .infobox span").eq(i).append(info);
-		}else{
-			$(".outerbox .infobox span").eq(i).append(i+1);
+		var dataidx=$(".outerbox .innerbox a:first").find('img').attr("data-idx");
+		$(".outerbox ul li").eq(index).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
+		if(index-dataidx>0){
+			for(var i=0;i<Math.abs(index-dataidx);i++){
+					$(".outerbox .innerbox a:first").insertAfter($(".outerbox .innerbox a:last"));
+			}
+		}else if(index-dataidx<0){
+			for(var i=0;i<Math.abs(index-dataidx);i++){
+					$(".outerbox .innerbox a:last").insertBefore($(".outerbox .innerbox a:first"));
+			}
 		}
-	}
+	});
 }
