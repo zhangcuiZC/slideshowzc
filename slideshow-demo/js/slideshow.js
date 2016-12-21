@@ -77,7 +77,10 @@ function slideshow(thetime,thecolor){
 		paddingRight:liheight*0.2+"px",
 		verticalAlign: 'middle',
 		color:'#ddd',
-		fontSize:'12px'
+		fontSize:'12px',
+		wordBreak:'break-all',
+		height:'2.2em',
+		overflow:'hidden'
 	});
 	//获得img上层a的href属性，赋给infobox里的a元素
 	for(var i=0;i<imgnum;i++){
