@@ -15,7 +15,7 @@ function slideshow(thetime,thecolor){
 	var imgnum=$(".outerbox img").length;
 	var imgwidth=$(".outerbox").width();
 	var imgheight=$(".outerbox").height();
-
+	//给每个图片设置data-idx属性标识它们，使其能够和infobox相对应
 	for(var i=0;i<imgnum;i++){
 		$(".outerbox .innerbox img").eq(i).attr('data-idx', i);
 	}
@@ -118,28 +118,34 @@ function slideshow(thetime,thecolor){
 	}, function() {
 		$(this).css('background', 'rgba(0,0,0,0.4)');
 	});
-	//点击右箭头
+	//点击左右箭头
 	$(".outerbox ul li").eq(0).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-	$(".outerbox .rightarrow").click(function() {
-		if (!innerbox.is(':animated')) {
-			innerbox.animate({left:-imgwidth}, "normal",function(){
-				$(".outerbox .innerbox a:first").insertAfter($(".outerbox .innerbox a:last"));
-				innerbox.css('left', '0');
-				var dataidx=$(".outerbox .innerbox a:first").find('img').attr("data-idx");
+	$(".outerbox").on('click', '.arrow', function(event) {
+		if ($(event.target).hasClass('rightarrow')) {
+			if (!innerbox.is(':animated')) {
+				var dataidx=$(".outerbox .innerbox a:first").next("a").find('img').attr("data-idx");
 				$(".outerbox ul li").eq(dataidx).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-			});	
+				innerbox.animate({left:-imgwidth}, "normal",function(){
+					$(".outerbox .innerbox a:first").insertAfter($(".outerbox .innerbox a:last"));
+					innerbox.css('left', '0');
+				});	
+			}
 		}
-	});
-	//点击左箭头
-	$(".outerbox .leftarrow").click(function() {
-		if (!innerbox.is(':animated')) {
+
+		if ($(event.target).hasClass('leftarrow')) {
+			if (!innerbox.is(':animated')) {
 				$(".outerbox .innerbox a:last").insertBefore($(".outerbox .innerbox a:first"));
 				innerbox.css('left', -imgwidth);
 				innerbox.animate({left:0}, "normal");
 				var dataidx=$(".outerbox .innerbox a:first").find('img').attr("data-idx");
 				$(".outerbox ul li").eq(dataidx).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
+			}
 		}
 	});
+
+
+
+
 	//每5s自动滚动，鼠标放在div上时箭头出现，移走箭头消失
 	$(".outerbox").hover(function() {
 		$(this).find('.leftarrow').stop().animate({left:"0"},300);
