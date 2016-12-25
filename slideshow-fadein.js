@@ -1,5 +1,6 @@
 function slideshowFadein(thetime,thecolor){
 	//初始化颜色和轮播间隔
+	var i;
 	var color="#317EF3";
 	var time=5000;
 	if(arguments.length==1){
@@ -24,7 +25,7 @@ function slideshowFadein(thetime,thecolor){
 	$(".outerbox >a").css({
 		position: 'absolute',
 		left:'0',
-		top:'0'
+		top:'0',
 	});
 	//在outerbox下新增一个显示alt的div
 	var $infobox=$("<div class='infobox'></div>");
@@ -39,7 +40,7 @@ function slideshowFadein(thetime,thecolor){
 	var liheight=$(".outerbox .infobox").height();
 
 	var lists="";
-	for(var i=0;i<imgnum;i++){
+	for(i=0;i<imgnum;i++){
 		lists+="<li><a href=''><span></span></a></li>";
 	}
 	var ullists="<ul>"+lists+"</ul>";
@@ -159,14 +160,18 @@ function slideshowFadein(thetime,thecolor){
 		},time);
 	}).trigger('mouseleave');
 	//鼠标放在下方的颜色块上时移动图片
+	var thisindex=-1;
 	$(".outerbox .infobox ul li").mouseover(function() {
 		var index=$(this).index();
-		page=index+1;
-		$(".outerbox .infobox ul li").eq(index).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
-		showpic(index);
+		if(thisindex!==index){
+			thisindex=index;
+			page=index+1;
+			$(".outerbox .infobox ul li").eq(index).css('backgroundColor', color).siblings().css('background', 'rgba(0,0,0,0.4)');
+			showpic(index);
+		}
 	});
 	//获得img上层a的href属性，赋给infobox里的a元素
-	for(var i=0;i<imgnum;i++){
+	for(i=0;i<imgnum;i++){
 		var link=$(".outerbox a").eq(i).attr("href");
 		var info=$(".outerbox img").eq(i).attr("alt");
 		$(".outerbox .infobox a").eq(i).attr('href', link);
@@ -178,6 +183,6 @@ function slideshowFadein(thetime,thecolor){
 	}
 	//切换图片
 	function showpic(index){
-		$(".outerbox >a").stop(true,true).eq(index).fadeIn(600).siblings('a').animate({width: "hide"}, 400);
+		$(".outerbox >a").stop(true,true).eq(index).css('zIndex', '-1').fadeIn(600).siblings('a').css('zIndex', '-2').animate({width: "hide"}, 400);
 	}
 }
