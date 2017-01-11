@@ -1,3 +1,3 @@
 $(function(){
-	slideshow(5000);
+	$(".box").slideShow({color:'red'});
 });
