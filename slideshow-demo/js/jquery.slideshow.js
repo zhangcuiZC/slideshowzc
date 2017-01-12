@@ -26,7 +26,10 @@
 			}
 
 			//设置各个div的css样式
-			$imgs.css('float', 'left');
+			$imgs.css({
+				float: 'left',
+				border: 'none'
+			});
 			$outerbox.css({
 				overflow: 'hidden',
 				position: 'relative'
@@ -47,7 +50,7 @@
 				left: '0',
 				bottom:'0',
 				width:imgwidth+10+"px",
-				height:'13%',
+				height:'13%'
 			});
 			var liheight=$infobox.height();
 
@@ -76,7 +79,7 @@
 			$infobox.find('a').css({
 				display: 'inline-block',
 				width:$infobox.find('li').width()+"px",
-				textAlign:'center',
+				textAlign:'center'
 			});
 			$infobox.find('span').css({
 				display:'inline-block',
