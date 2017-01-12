@@ -1,3 +1,3 @@
 $(function(){
-	slideshowFadein(5000);
+	$(".box").slideShowFadein({color:"purple"});
 });
