@@ -201,6 +201,30 @@
 				$outerbox.children('a').stop(true,true).eq(index).css('zIndex', '-1').fadeIn(600).siblings('a').css('zIndex', '-2').animate({width: "hide"}, 400);
 			}
 
+			//页面可见性，不可见时停止轮播
+			function handlevisibilitychange(){
+				if (document[hidden]) {
+					clearInterval(adTimer);
+				}else{
+					adTimer=setInterval(function () {
+						$outerbox.find('.rightarrow').trigger('click');
+					},settings.time);
+				}
+			}
+			var hidden, visibilityChange;
+			if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+			  	hidden = "hidden";
+			  	visibilityChange = "visibilitychange";
+			} else if (typeof document.msHidden !== "undefined") {
+			  	hidden = "msHidden";
+			  	visibilityChange = "msvisibilitychange";
+			} else if (typeof document.webkitHidden !== "undefined") {
+			  	hidden = "webkitHidden";
+			  	visibilityChange = "webkitvisibilitychange";
+			}
+
+			document.addEventListener(visibilityChange, handlevisibilitychange, false);
+			
 			return this;
 		}
 	});

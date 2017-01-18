@@ -2,11 +2,10 @@
 
 一个轮播插件，样式类似于亚马逊首页的轮播图
 
-可以实现任意个图片的轮播。
-
-有两种轮播方法：无差别滚动(jquery.slideshow.js)和淡入淡出(jquery.slideshowfadein.js)。
-
-img的alt值将作为轮播图下方的描述信息,如果没有alt信息，则使用数字索引。
+1. 可以实现任意个图片的轮播。
+2. 有两种轮播方法：无差别滚动(jquery.slideshow.js)和淡入淡出(jquery.slideshowfadein.js)。
+3. img的alt值将作为轮播图下方的描述信息,如果没有alt信息，则使用数字索引。
+4. 使用Page visibility API使页面不可见时停止轮播动画。
 
 使用方法：
 
