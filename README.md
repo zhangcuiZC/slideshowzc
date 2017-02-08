@@ -1,6 +1,6 @@
 # slideshowzc
 
-一个轮播插件，样式类似于亚马逊首页的轮播图
+##一个轮播插件，样式类似于亚马逊首页的轮播图
 
 1. 可以实现任意个图片的轮播。
 2. 有两种轮播方法：无差别滚动(jquery.slideshow.js)和淡入淡出(jquery.slideshowfadein.js)。
@@ -16,3 +16,7 @@
 * $(".outerbox").slideShow({color:"#f77",time:4000});或者$(".outerbox").slideShowFadein({color:"#f77",time:4000});
 
 实参说明：一个设定颜色和轮播间隔的对象。形如{color:"#ff7",time:5000}，对象可接受0~2个属性。
+
+##3dSlideDemo
+
+一个3D效果的轮播样式，尚未完成
